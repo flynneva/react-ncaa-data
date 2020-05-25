@@ -7,10 +7,12 @@ node_modules
 # builds
 build
 dist
+docs
 .rpt2_cache
 
 # misc
 .DS_Store
+.docz
 .env
 .env.local
 .env.development.local
