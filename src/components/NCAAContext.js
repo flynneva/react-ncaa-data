@@ -1,9 +1,17 @@
 import React, { createContext, useState } from 'react'
 import PropTypes from 'prop-types'
 
+const today = new Date();
+
 const ncaaObj = {
-  base_url: "/ncaa_api/casablanca",
+  proxy_api: 'ncaa_api',
+  base_query: 'casablanca',
   timestamp: '0',
+  day: ('0' + today.getDate()).slice(-2),
+  month: ('0' + (today.getMonth() + 1)).slice(-2),
+  year: today.getFullYear(),
+  division: 'd1',
+  games: [],
 }
 
 const NCAAContext = createContext([{}, () => {}]);
