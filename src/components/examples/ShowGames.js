@@ -42,6 +42,7 @@ function ShowGames() {
       <button onClick={handleGames}>Refresh Games</button><br />
       <br />
       <b>Number of games on {day}-{month}-{year}: </b>{games.length}<br />
+      { games.map((game, i) => <li key={i}>{game.game.title}</li>) }
     </div>
   );
 }
