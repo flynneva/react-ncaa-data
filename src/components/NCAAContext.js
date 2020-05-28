@@ -6,11 +6,12 @@ const today = new Date();
 const ncaaObj = {
   proxy_api: 'ncaa_api',
   base_query: 'casablanca',
+  division: 'd1',
   timestamp: '0',
   day: ('0' + today.getDate()).slice(-2),
   month: ('0' + (today.getMonth() + 1)).slice(-2),
   year: today.getFullYear(),
-  division: 'd1',
+  sport: 'none',
   games: [],
 }
 

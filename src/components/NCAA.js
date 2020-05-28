@@ -31,16 +31,37 @@ function useNCAA() {
     fetch(query, {
             method: 'GET',
             body: JSON.stringify()
-          })
-          .then(response => response.json())
-          .then(data => {
-            setNCAA(ncaa => ({ ...ncaa, games: data.games}));
-            setNCAA(ncaa => ({ ...ncaa, timestamp: Date.UTC()}));
-	  })
-          .catch(error => {
-            console.log(error);
-            setNCAA(ncaa => ({ ...ncaa, games: [] }));
-          });
+    })
+    .then(response => response.json())
+    .then(data => {
+      setNCAA(ncaa => ({ ...ncaa, games: data.games}));
+      setNCAA(ncaa => ({ ...ncaa, sport: sport}));
+      setNCAA(ncaa => ({ ...ncaa, timestamp: Date.UTC()}));
+    })
+    .catch(error => {
+      console.log(error);
+      setNCAA(ncaa => ({ ...ncaa, games: [] }));
+      setNCAA(ncaa => ({ ...ncaa, sport: 'none'}));
+    });
+  }
+
+  function getBoxScore(gameID) {
+    var query = '/' + ncaa.proxy_api +
+                '/' + ncaa.base_query +
+                '/game' +
+                '/' + gameID +
+                '/gameInfo.json';
+    fetch(query, {
+            method: 'GET',
+            body: JSON.stringify()
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.log(error);
+    })
   }
 
   return {
