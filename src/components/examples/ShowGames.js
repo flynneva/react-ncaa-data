@@ -4,7 +4,7 @@ import { useNCAA } from '../NCAA'
 const date = new Date();
 
 function ShowGames() {
-  const { day, month, year, changeDate, games, getGames } = useNCAA();
+  const { day, month, year, changeDate, games, getGames, sport, gender } = useNCAA();
 
   const handleGames = () => {
     getGames('basketball-men');

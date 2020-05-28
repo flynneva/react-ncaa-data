@@ -7,6 +7,7 @@ const ncaaObj = {
   proxy_api: 'ncaa_api',
   base_query: 'casablanca',
   division: 'd1',
+  gender: 'men',
   timestamp: '0',
   day: ('0' + today.getDate()).slice(-2),
   month: ('0' + (today.getMonth() + 1)).slice(-2),

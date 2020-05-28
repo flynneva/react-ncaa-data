@@ -11,7 +11,7 @@ function useNCAA() {
 
   function changeDate(date) {
     const tempDay = ('0' + date.getDate()).slice(-2);
-    const tempMonth = ('0' + (date.getMonth())).slice(-2);
+    const tempMonth = ('0' + (date.getMonth() + 1)).slice(-2);
     const tempYear = date.getFullYear();
     setNCAA(ncaa => ({ ...ncaa, day: tempDay}));
     setNCAA(ncaa => ({ ...ncaa, month: tempMonth}));
@@ -64,10 +64,21 @@ function useNCAA() {
     })
   }
 
+  function toggleGender() {
+    if ( ncaa.gender == 'men' ) {
+      setNCAA(ncaa => ({ ...ncaa, gender: 'women'}));
+    } else if (ncaa.gender == 'women') {
+      setNCAA(ncaa => ({ ...ncaa, gender: 'men'}));
+    }
+  }
+
   return {
     changeProxyApi,
     changeDate,
     getGames,
+    toggleGender,
+    gender: ncaa.gender,
+    sport: ncaa.sport,
     games: ncaa.games,
     proxy_api: ncaa.proxy_api,
     timestamp: ncaa.timestamp,
