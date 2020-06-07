@@ -50,6 +50,26 @@ function useNCAA() {
                 '/' + ncaa.base_query +
                 '/game' +
                 '/' + gameID +
+                '/boxscore.json';
+    fetch(query, {
+            method: 'GET',
+            body: JSON.stringify()
+    })
+    .then(response => response.json())
+    .then(data => {
+      setNCAA(ncaa => ({ ...ncaa, boxscore: data}));
+      setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
+  function getGameInfo(gameID) {
+    var query = '/' + ncaa.proxy_api +
+                '/' + ncaa.base_query +
+                '/game' +
+                '/' + gameID +
                 '/gameInfo.json';
     fetch(query, {
             method: 'GET',
@@ -57,7 +77,28 @@ function useNCAA() {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
+      setNCAA(ncaa => ({ ...ncaa, gameInfo: data}));
+      setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
+    })
+    .catch(error => {
+      console.log(error);
+    })
+  }
+
+  function getPbP(gameID) {
+    var query = '/' + ncaa.proxy_api +
+                '/' + ncaa.base_query +
+                '/game' +
+                '/' + gameID +
+                '/pbp.json';
+    fetch(query, {
+            method: 'GET',
+            body: JSON.stringify()
+    })
+    .then(response => response.json())
+    .then(data => {
+      setNCAA(ncaa => ({ ...ncaa, pbp: data}));
+      setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
     })
     .catch(error => {
       console.log(error);
@@ -76,10 +117,17 @@ function useNCAA() {
     changeProxyApi,
     changeDate,
     getGames,
+    getBoxScore,
+    getPbP,
+    getGameInfo,
     toggleGender,
     gender: ncaa.gender,
     sport: ncaa.sport,
     games: ncaa.games,
+    gameID: ncaa.gameID,
+    gameInfo: ncaa.gameInfo,
+    boxscore: ncaa.boxscore,
+    pbp: ncaa.pbp,
     proxy_api: ncaa.proxy_api,
     timestamp: ncaa.timestamp,
     day: ncaa.day,

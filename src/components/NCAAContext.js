@@ -14,6 +14,10 @@ const ncaaObj = {
   year: today.getFullYear(),
   sport: 'none',
   games: [],
+  gameID: '0000000',
+  gameInfo: [],
+  boxscore: [],
+  pbp: [],
 }
 
 const NCAAContext = createContext([{}, () => {}]);

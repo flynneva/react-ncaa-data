@@ -1,0 +1,25 @@
+---
+name: Show Box Score
+route: /examples/show_boxscore/
+menu: Examples
+---
+
+### Configure Proxy
+
+As stated in [the README](https://flynneva.github.io/react-ncaa-data/readme), make sure you have configured your proxy before trying this example yourself.
+
+### Get Box Score from specific game
+
+In order to get the boxscore (or any game-specific data) you will need to know the `game ID` referencing that specific game. You can obtain this from getting the 'scoreboard' from a specific day as shown in the `Show Games` example.
+
+import { Playground } from 'docz'
+import { NCAA } from '../NCAA'
+
+import ShowBoxScore from './ShowBoxScore'
+
+<Playground>
+  <NCAA>
+    <ShowBoxScore />
+  </NCAA>
+</Playground>
+
