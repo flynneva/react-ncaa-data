@@ -34,9 +34,18 @@ function useNCAA() {
     })
     .then(response => response.json())
     .then(data => {
-      setNCAA(ncaa => ({ ...ncaa, games: data.games}));
-      setNCAA(ncaa => ({ ...ncaa, sport: sport}));
-      setNCAA(ncaa => ({ ...ncaa, timestamp: Date.UTC()}));
+      try {
+        // see if response was object not found
+        if (data['Message'] = 'Object not found.') {
+          setNCAA(ncaa => ({ ...ncaa, games: [] }));
+          setNCAA(ncaa => ({ ...ncaa, sport: 'none'}));
+         }
+      } catch {
+        // response is OK
+        setNCAA(ncaa => ({ ...ncaa, games: data.games}));
+        setNCAA(ncaa => ({ ...ncaa, sport: sport}));
+        setNCAA(ncaa => ({ ...ncaa, timestamp: Date.UTC()}));
+      }
     })
     .catch(error => {
       console.log(error);

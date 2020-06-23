@@ -19,8 +19,8 @@ function ShowGames() {
   }
 
   const handleMonth = (new_month) => {
-    if (new_month == 0) {
-      new_month = 1;
+    if(new_month <= 0) {
+      new_month = 0;
     }
     date.setMonth(new_month);
     changeDate(date);
@@ -37,7 +37,7 @@ function ShowGames() {
   return (
     <div>
       <b>Day: </b><input name="dayInput" defaultValue={ day } onChange={event => {handleDay(event.target.value)}}/> <br />
-      <b>Month: </b><input name="monthInput" defaultValue={ month } onChange={event => {handleMonth(event.target.value)}}/> <br />
+      <b>Month: </b><input name="monthInput" defaultValue={ month } onChange={event => {handleMonth(event.target.value - 1)}}/> <br />
       <b>Year: </b><input name="yearInput" defaultValue={ year } onChange={event => {handleYear(event.target.value)}}/> <br />
       <button onClick={handleGames}>Refresh Games</button><br />
       <br />
