@@ -13,6 +13,7 @@ function useNCAA() {
     const tempDay = ('0' + date.getDate()).slice(-2);
     const tempMonth = ('0' + (date.getMonth() + 1)).slice(-2);
     const tempYear = date.getFullYear();
+
     setNCAA(ncaa => ({ ...ncaa, day: tempDay}));
     setNCAA(ncaa => ({ ...ncaa, month: tempMonth}));
     setNCAA(ncaa => ({ ...ncaa, year: tempYear}));
@@ -34,18 +35,11 @@ function useNCAA() {
     })
     .then(response => response.json())
     .then(data => {
-      try {
-        // see if response was object not found
-        if (data['Message'] = 'Object not found.') {
-          setNCAA(ncaa => ({ ...ncaa, games: [] }));
-          setNCAA(ncaa => ({ ...ncaa, sport: 'none'}));
-         }
-      } catch {
-        // response is OK
+      if (data.games.length !== 0) {
         setNCAA(ncaa => ({ ...ncaa, games: data.games}));
         setNCAA(ncaa => ({ ...ncaa, sport: sport}));
         setNCAA(ncaa => ({ ...ncaa, timestamp: Date.UTC()}));
-      }
+      } 
     })
     .catch(error => {
       console.log(error);
