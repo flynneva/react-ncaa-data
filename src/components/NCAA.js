@@ -29,6 +29,7 @@ function useNCAA() {
                 '/' + ncaa.month +
                 '/' + ncaa.day +
                 '/scoreboard.json';
+    setNCAA(ncaa => ({ ...ncaa, loadingGames: true})); 
     fetch(query, {
             method: 'GET',
             body: JSON.stringify()
@@ -39,12 +40,14 @@ function useNCAA() {
         setNCAA(ncaa => ({ ...ncaa, games: data.games}));
         setNCAA(ncaa => ({ ...ncaa, sport: sport}));
         setNCAA(ncaa => ({ ...ncaa, timestamp: Date.UTC()}));
+        setNCAA(ncaa => ({ ...ncaa, loadingGames: false})); 
       } 
     })
     .catch(error => {
       console.log(error);
       setNCAA(ncaa => ({ ...ncaa, games: [] }));
       setNCAA(ncaa => ({ ...ncaa, sport: 'none'}));
+      setNCAA(ncaa => ({ ...ncaa, loadingGames: false})); 
     });
   }
 
@@ -54,6 +57,7 @@ function useNCAA() {
                 '/game' +
                 '/' + gameID +
                 '/boxscore.json';
+    setNCAA(ncaa => ({ ...ncaa, loadingBoxScore: true})); 
     fetch(query, {
             method: 'GET',
             body: JSON.stringify()
@@ -62,8 +66,10 @@ function useNCAA() {
     .then(data => {
       setNCAA(ncaa => ({ ...ncaa, boxscore: data}));
       setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
+      setNCAA(ncaa => ({ ...ncaa, loadingBoxScore: false})); 
     })
     .catch(error => {
+      setNCAA(ncaa => ({ ...ncaa, loadingBoxScore: false})); 
       console.log(error);
     })
   }
@@ -74,6 +80,7 @@ function useNCAA() {
                 '/game' +
                 '/' + gameID +
                 '/gameInfo.json';
+    setNCAA(ncaa => ({ ...ncaa, loadingGameInfo: true})); 
     fetch(query, {
             method: 'GET',
             body: JSON.stringify()
@@ -82,8 +89,10 @@ function useNCAA() {
     .then(data => {
       setNCAA(ncaa => ({ ...ncaa, gameInfo: data}));
       setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
+      setNCAA(ncaa => ({ ...ncaa, loadingGameInfo: false})); 
     })
     .catch(error => {
+      setNCAA(ncaa => ({ ...ncaa, loadingGameInfo: false})); 
       console.log(error);
     })
   }
@@ -94,6 +103,7 @@ function useNCAA() {
                 '/game' +
                 '/' + gameID +
                 '/pbp.json';
+    setNCAA(ncaa => ({ ...ncaa, loadingPbp: true})); 
     fetch(query, {
             method: 'GET',
             body: JSON.stringify()
@@ -102,8 +112,10 @@ function useNCAA() {
     .then(data => {
       setNCAA(ncaa => ({ ...ncaa, pbp: data}));
       setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
+      setNCAA(ncaa => ({ ...ncaa, loadingPbp: false})); 
     })
     .catch(error => {
+      setNCAA(ncaa => ({ ...ncaa, loadingPbp: false})); 
       console.log(error);
     })
   }
@@ -131,6 +143,10 @@ function useNCAA() {
     gameInfo: ncaa.gameInfo,
     boxscore: ncaa.boxscore,
     pbp: ncaa.pbp,
+    loadingGames: ncaa.loadingGames,
+    loadingGameInfo: ncaa.loadingGameInfo,
+    loadingBoxScore: ncaa.loadingBoxscore,
+    loadingPbp: ncaa.loadingPbp,
     proxy_api: ncaa.proxy_api,
     timestamp: ncaa.timestamp,
     day: ncaa.day,
