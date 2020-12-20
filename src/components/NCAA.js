@@ -2,6 +2,11 @@ import React, { useContext } from 'react'
 import { NCAAContext, NCAAProvider } from './NCAAContext'
 import PropTypes from 'prop-types'
 
+var headers = {
+    'pragma': 'no-cache',
+    'cache-control': 'no-cache'
+}
+
 function useNCAA() {
   const [ ncaa, setNCAA ] = useContext(NCAAContext);
 
@@ -29,26 +34,29 @@ function useNCAA() {
                 '/' + ncaa.month +
                 '/' + ncaa.day +
                 '/scoreboard.json';
-    setNCAA(ncaa => ({ ...ncaa, loadingGames: true})); 
-    fetch(query, {
-            method: 'GET',
-            body: JSON.stringify()
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.games.length !== 0) {
-        setNCAA(ncaa => ({ ...ncaa, games: data.games}));
-        setNCAA(ncaa => ({ ...ncaa, sport: sport}));
-        setNCAA(ncaa => ({ ...ncaa, timestamp: Date.UTC()}));
+    if(!ncaa.loadingGames) {
+      setNCAA(ncaa => ({ ...ncaa, loadingGames: true})); 
+      fetch(query, {
+              method: 'GET',
+	      headers: headers,
+              body: JSON.stringify()
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.games.length !== 0) {
+          setNCAA(ncaa => ({ ...ncaa, games: data.games}));
+          setNCAA(ncaa => ({ ...ncaa, sport: sport}));
+          setNCAA(ncaa => ({ ...ncaa, timestamp: Date.UTC()}));
+          setNCAA(ncaa => ({ ...ncaa, loadingGames: false})); 
+        } 
+      })
+      .catch(error => {
+        console.log(error);
+        setNCAA(ncaa => ({ ...ncaa, games: [] }));
+        setNCAA(ncaa => ({ ...ncaa, sport: 'none'}));
         setNCAA(ncaa => ({ ...ncaa, loadingGames: false})); 
-      } 
-    })
-    .catch(error => {
-      console.log(error);
-      setNCAA(ncaa => ({ ...ncaa, games: [] }));
-      setNCAA(ncaa => ({ ...ncaa, sport: 'none'}));
-      setNCAA(ncaa => ({ ...ncaa, loadingGames: false})); 
-    });
+      });
+    }
   }
 
   function getBoxScore(gameID) {
@@ -57,21 +65,24 @@ function useNCAA() {
                 '/game' +
                 '/' + gameID +
                 '/boxscore.json';
-    setNCAA(ncaa => ({ ...ncaa, loadingBoxScore: true})); 
-    fetch(query, {
+    if(!ncaa.loadingBoxScore) {
+      setNCAA(ncaa => ({ ...ncaa, loadingBoxScore: true})); 
+      fetch(query, {
             method: 'GET',
+            headers: headers,
             body: JSON.stringify()
-    })
-    .then(response => response.json())
-    .then(data => {
-      setNCAA(ncaa => ({ ...ncaa, boxscore: data}));
-      setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
-      setNCAA(ncaa => ({ ...ncaa, loadingBoxScore: false})); 
-    })
-    .catch(error => {
-      setNCAA(ncaa => ({ ...ncaa, loadingBoxScore: false})); 
-      console.log(error);
-    })
+      })
+      .then(response => response.json())
+      .then(data => {
+        setNCAA(ncaa => ({ ...ncaa, boxscore: data}));
+        setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
+        setNCAA(ncaa => ({ ...ncaa, loadingBoxScore: false})); 
+      })
+      .catch(error => {
+        setNCAA(ncaa => ({ ...ncaa, loadingBoxScore: false})); 
+        console.log(error);
+      })
+    }
   }
 
   function getGameInfo(gameID) {
@@ -80,21 +91,24 @@ function useNCAA() {
                 '/game' +
                 '/' + gameID +
                 '/gameInfo.json';
-    setNCAA(ncaa => ({ ...ncaa, loadingGameInfo: true})); 
-    fetch(query, {
-            method: 'GET',
-            body: JSON.stringify()
-    })
-    .then(response => response.json())
-    .then(data => {
-      setNCAA(ncaa => ({ ...ncaa, gameInfo: data}));
-      setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
-      setNCAA(ncaa => ({ ...ncaa, loadingGameInfo: false})); 
-    })
-    .catch(error => {
-      setNCAA(ncaa => ({ ...ncaa, loadingGameInfo: false})); 
-      console.log(error);
-    })
+    if(!ncaa.loadingGameInfo) {
+      setNCAA(ncaa => ({ ...ncaa, loadingGameInfo: true})); 
+      fetch(query, {
+              method: 'GET',
+              headers: headers,
+              body: JSON.stringify()
+      })
+      .then(response => response.json())
+      .then(data => {
+        setNCAA(ncaa => ({ ...ncaa, gameInfo: data}));
+        setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
+        setNCAA(ncaa => ({ ...ncaa, loadingGameInfo: false})); 
+      })
+      .catch(error => {
+        setNCAA(ncaa => ({ ...ncaa, loadingGameInfo: false})); 
+        console.log(error);
+      })
+    }
   }
 
   function getPbP(gameID) {
@@ -103,21 +117,24 @@ function useNCAA() {
                 '/game' +
                 '/' + gameID +
                 '/pbp.json';
-    setNCAA(ncaa => ({ ...ncaa, loadingPbp: true})); 
-    fetch(query, {
-            method: 'GET',
-            body: JSON.stringify()
-    })
-    .then(response => response.json())
-    .then(data => {
-      setNCAA(ncaa => ({ ...ncaa, pbp: data}));
-      setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
-      setNCAA(ncaa => ({ ...ncaa, loadingPbp: false})); 
-    })
-    .catch(error => {
-      setNCAA(ncaa => ({ ...ncaa, loadingPbp: false})); 
-      console.log(error);
-    })
+    if(!ncaa.loadingPbp) {
+      setNCAA(ncaa => ({ ...ncaa, loadingPbp: true})); 
+      fetch(query, {
+              method: 'GET',
+              headers: headers,
+              body: JSON.stringify()
+      })
+      .then(response => response.json())
+      .then(data => {
+        setNCAA(ncaa => ({ ...ncaa, pbp: data}));
+        setNCAA(ncaa => ({ ...ncaa, gameID: gameID}));
+        setNCAA(ncaa => ({ ...ncaa, loadingPbp: false})); 
+      })
+      .catch(error => {
+        setNCAA(ncaa => ({ ...ncaa, loadingPbp: false})); 
+        console.log(error);
+      })
+    }
   }
 
   function toggleGender() {
@@ -145,7 +162,7 @@ function useNCAA() {
     pbp: ncaa.pbp,
     loadingGames: ncaa.loadingGames,
     loadingGameInfo: ncaa.loadingGameInfo,
-    loadingBoxScore: ncaa.loadingBoxscore,
+    loadingBoxScore: ncaa.loadingBoxScore,
     loadingPbp: ncaa.loadingPbp,
     proxy_api: ncaa.proxy_api,
     timestamp: ncaa.timestamp,

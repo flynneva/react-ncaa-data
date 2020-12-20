@@ -6,7 +6,7 @@ const gameID = '3912213';
 const date = new Date();
 
 function ShowBoxScore() {
-  const { getBoxScore, boxscore } = useNCAA();
+  const { getBoxScore, boxscore, loadingBoxScore } = useNCAA();
 
   const handleBoxScore = () => {
     getBoxScore(gameID);
@@ -20,7 +20,7 @@ function ShowBoxScore() {
   }
  
   let score_viz = [];
-  if (typeof boxscore === 'undefined' || boxscore.length === 0) {
+  if (typeof boxscore === 'undefined' || boxscore.length === 0 || loadingBoxScore) {
     score_viz = <p>No score to report</p>
   } else {
     console.log(boxscore);
