@@ -3,39 +3,41 @@ import { NCAAContext, NCAAProvider } from './NCAAContext'
 import PropTypes from 'prop-types'
 
 var headers = {
-    'pragma': 'no-cache',
-    'cache-control': 'no-cache'
+  pragma: 'no-cache',
+  'cache-control': 'no-cache'
 }
 
 function useNCAA() {
-  const [ ncaa, setNCAA ] = useContext(NCAAContext);
+  const [ncaa, setNCAA] = useContext(NCAAContext);
 
-  function changeProxyApi(new_proxy) {
-    setNCAA(ncaa => ({ ...ncaa, proxy_api: new_proxy}));
+  function changeProxyApi(newProxy) {
+    setNCAA(ncaa => ({ ...ncaa, proxy_api: newProxy }));
   }
 
   function changeDate(date) {
-    const tempDay = ('0' + date.getDate()).slice(-2);
-    const tempMonth = ('0' + (date.getMonth() + 1)).slice(-2);
-    const tempYear = date.getFullYear();
+    const tempDay = ('0' + date.getDate()).slice(-2)
+    const tempMonth = ('0' + (date.getMonth() + 1)).slice(-2)
+    const tempYear = date.getFullYear()
 
-    setNCAA(ncaa => ({ ...ncaa, day: tempDay}));
-    setNCAA(ncaa => ({ ...ncaa, month: tempMonth}));
-    setNCAA(ncaa => ({ ...ncaa, year: tempYear}));
+    setNCAA(ncaa => ({ ...ncaa, day: tempDay }));
+    setNCAA(ncaa => ({ ...ncaa, month: tempMonth }));
+    setNCAA(ncaa => ({ ...ncaa, year: tempYear }));
   }
 
   function getGames(sport) {
-    var query = '/' + ncaa.proxy_api +
-                '/' + ncaa.base_query +
-		'/scoreboard' +
-                '/' + sport +
-                '/' + ncaa.division +
-                '/' + ncaa.year +
-                '/' + ncaa.month +
-                '/' + ncaa.day +
-                '/scoreboard.json';
+    var query =
+      '/' + ncaa.proxy_api +
+      '/' + ncaa.base_query +
+      '/scoreboard' +
+      '/' + sport +
+      '/' + ncaa.division +
+      '/' + ncaa.year +
+      '/' + ncaa.month +
+      '/' + ncaa.day +
+      '/scoreboard.json'
+
     if(!ncaa.loadingGames) {
-      setNCAA(ncaa => ({ ...ncaa, loadingGames: true})); 
+      setNCAA(ncaa => ({ ...ncaa, loadingGames: true })) 
       fetch(query, {
               method: 'GET',
 	      headers: headers,
@@ -44,17 +46,17 @@ function useNCAA() {
       .then(response => response.json())
       .then(data => {
         if (data.games.length !== 0) {
-          setNCAA(ncaa => ({ ...ncaa, games: data.games}));
-          setNCAA(ncaa => ({ ...ncaa, sport: sport}));
-          setNCAA(ncaa => ({ ...ncaa, timestamp: Date.UTC()}));
-          setNCAA(ncaa => ({ ...ncaa, loadingGames: false})); 
+          setNCAA(ncaa => ({ ...ncaa, games: data.games }))
+          setNCAA(ncaa => ({ ...ncaa, sport: sport }))
+          setNCAA(ncaa => ({ ...ncaa, timestamp: Date.UTC() }))
+          setNCAA(ncaa => ({ ...ncaa, loadingGames: false })) 
         } 
       })
       .catch(error => {
-        console.log(error);
-        setNCAA(ncaa => ({ ...ncaa, games: [] }));
-        setNCAA(ncaa => ({ ...ncaa, sport: 'none'}));
-        setNCAA(ncaa => ({ ...ncaa, loadingGames: false})); 
+        console.log(error)
+        setNCAA(ncaa => ({ ...ncaa, games: [] }))
+        setNCAA(ncaa => ({ ...ncaa, sport: 'none' }));
+        setNCAA(ncaa => ({ ...ncaa, loadingGames: false })) 
       });
     }
   }

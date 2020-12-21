@@ -7,13 +7,12 @@ const proxyPlugin = () =>
       app.use(
         '/ncaa_api',
         proxy({
-          target: "https://data.ncaa.com/",
+          target: 'https://data.ncaa.com/',
           changeOrigin: true,
-          pathRewrite: {
-            '^/ncaa_api/': '/'
+          pathRewrite: {'^/ncaa_api/': '/'
 	  }
         })
-      );
+      )
     }
   })
 
@@ -22,6 +21,5 @@ export default {
   base: './react-ncaa-data/',
   title: 'react-ncaa-data',
   plugins: [
-    proxyPlugin(),
-  ],
+    proxyPlugin()]
 }
