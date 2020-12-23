@@ -26,18 +26,25 @@ function useNCAA() {
 
   function getGames(sport) {
     var query =
-      '/' + ncaa.proxy_api +
-      '/' + ncaa.base_query +
+      '/' +
+      ncaa.proxy_api +
+      '/' +
+      ncaa.base_query +
       '/scoreboard' +
-      '/' + sport +
-      '/' + ncaa.division +
-      '/' + ncaa.year +
-      '/' + ncaa.month +
-      '/' + ncaa.day +
+      '/' +
+      sport +
+      '/' +
+      ncaa.division +
+      '/' +
+      ncaa.year +
+      '/' +
+      ncaa.month +
+      '/' +
+      ncaa.day +
       '/scoreboard.json'
 
     if(!ncaa.loadingGames) {
-      setNCAA(ncaa => ({ ...ncaa, loadingGames: true })) 
+      setNCAA((ncaa) => ({ ...ncaa, loadingGames: true })) 
       fetch(query, {
               method: 'GET',
 	      headers: headers,
