@@ -8,10 +8,10 @@ var headers = {
 }
 
 function useNCAA() {
-  const [ncaa, setNCAA] = useContext(NCAAContext);
+  const [ncaa, setNCAA] = useContext(NCAAContext)
 
   function changeProxyApi(newProxy) {
-    setNCAA(ncaa => ({ ...ncaa, proxy_api: newProxy }));
+    setNCAA(ncaa => ({ ...ncaa, proxy_api: newProxy }))
   }
 
   function changeDate(date) {
@@ -19,17 +19,17 @@ function useNCAA() {
     const tempMonth = ('0' + (date.getMonth() + 1)).slice(-2)
     const tempYear = date.getFullYear()
 
-    setNCAA(ncaa => ({ ...ncaa, day: tempDay }));
-    setNCAA(ncaa => ({ ...ncaa, month: tempMonth }));
-    setNCAA(ncaa => ({ ...ncaa, year: tempYear }));
+    setNCAA(ncaa => ({ ...ncaa, day: tempDay }))
+    setNCAA(ncaa => ({ ...ncaa, month: tempMonth }))
+    setNCAA(ncaa => ({ ...ncaa, year: tempYear }))
   }
 
   function getGames(sport) {
     var query =
-      '/' + ncaa.proxy_api +
-      '/' + ncaa.base_query +
-      '/scoreboard' +
-      '/' + sport +
+      '/' + ncaa.proxy_api
+      + '/' + ncaa.base_query
+      + '/scoreboard'
+      + '/' + sport +
       '/' + ncaa.division +
       '/' + ncaa.year +
       '/' + ncaa.month +
