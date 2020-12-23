@@ -9,8 +9,7 @@ const proxyPlugin = () =>
         proxy({
           target: 'https://data.ncaa.com/',
           changeOrigin: true,
-          pathRewrite: { '^/ncaa_api/': '/'
-	  }
+          pathRewrite: { '^/ncaa_api/': '/' }
         })
       )
     }
