@@ -151,7 +151,7 @@ function useNCAA() {
       })
       .catch((error) => {
         setNCAA((ncaa) => ({ ...ncaa, loadingPbp: false}))
-        console.log(error
+        console.log(error)
       })
     }
   }
