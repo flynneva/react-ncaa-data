@@ -1,40 +1,43 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { useNCAA } from '../NCAA'
 
-const gameID = '3912213';
-
-const date = new Date();
+const gameID = '3912213'
 
 function ShowBoxScore() {
-  const { getBoxScore, boxscore, loadingBoxScore } = useNCAA();
+  const { getBoxScore, boxscore, loadingBoxScore } = useNCAA()
 
   const handleBoxScore = () => {
-    getBoxScore(gameID);
+    getBoxScore(gameID)
   }
 
-  let gameTitle;
+  let gameTitle
   if (typeof boxscore === 'undefined' || boxscore.length === 0) {
     gameTitle = <b>Click refresh to get game data for game ID 3912213</b>
   } else {
-    gameTitle = <b>{boxscore.meta['description']}</b>
+    gameTitle = <b>{boxscore.meta.description}</b>
   }
- 
-  let score_viz = [];
-  if (typeof boxscore === 'undefined' || boxscore.length === 0 || loadingBoxScore) {
-    score_viz = <p>No score to report</p>
+
+  let scoreViz = []
+  if (
+    typeof boxscore === 'undefined' ||
+    boxscore.length === 0 ||
+    loadingBoxScore
+  ) {
+    scoreViz = <p>No score to report</p>
   } else {
-    console.log(boxscore);
-    score_viz = <p>Boxscore printed to console!</p>
+    console.log(boxscore)
+    scoreViz = <p>Boxscore printed to console!</p>
   }
 
   return (
     <div>
-      <button onClick={handleBoxScore}>Refresh Boxscore</button><br />
+      <button onClick={handleBoxScore}>Refresh Boxscore</button>
+      <br />
       <br />
       {gameTitle}
-      {score_viz}
+      {scoreViz}
     </div>
-  );
+  )
 }
 
-export default ShowBoxScore;
+export default ShowBoxScore
