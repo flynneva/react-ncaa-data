@@ -43,28 +43,28 @@ function useNCAA() {
       ncaa.day +
       '/scoreboard.json'
 
-    if(!ncaa.loadingGames) {
-      setNCAA((ncaa) => ({ ...ncaa, loadingGames: true })) 
+    if (!ncaa.loadingGames) {
+      setNCAA((ncaa) => ({ ...ncaa, loadingGames: true }))
       fetch(query, {
-              method: 'GET',
-	      headers: headers,
-              body: JSON.stringify()
+        method: 'GET',
+        headers: headers,
+        body: JSON.stringify()
       })
-      .then(response => response.json())
-      .then(data => {
-        if (data.games.length !== 0) {
-          setNCAA((ncaa) => ({ ...ncaa, games: data.games }))
-          setNCAA((ncaa) => ({ ...ncaa, sport: sport }))
-          setNCAA((ncaa) => ({ ...ncaa, timestamp: Date.UTC() }))
+        .then(response => response.json())
+        .then(data => {
+          if (data.games.length !== 0) {
+            setNCAA((ncaa) => ({ ...ncaa, games: data.games }))
+            setNCAA((ncaa) => ({ ...ncaa, sport: sport }))
+            setNCAA((ncaa) => ({ ...ncaa, timestamp: Date.UTC() }))
+            setNCAA((ncaa) => ({ ...ncaa, loadingGames: false })) 
+          } 
+        })
+        .catch(error => {
+          console.log(error)
+          setNCAA((ncaa) => ({ ...ncaa, games: [] }))
+          setNCAA((ncaa) => ({ ...ncaa, sport: 'none' }));
           setNCAA((ncaa) => ({ ...ncaa, loadingGames: false })) 
-        } 
-      })
-      .catch(error => {
-        console.log(error)
-        setNCAA((ncaa) => ({ ...ncaa, games: [] }))
-        setNCAA((ncaa) => ({ ...ncaa, sport: 'none' }));
-        setNCAA((ncaa) => ({ ...ncaa, loadingGames: false })) 
-      });
+        });
     }
   }
 
