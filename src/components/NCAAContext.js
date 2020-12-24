@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react'
 import PropTypes from 'prop-types'
 
-const today = new Date();
+const today = new Date()
 
 const ncaaObj = {
   proxy_api: 'ncaa_api',
@@ -21,23 +21,22 @@ const ncaaObj = {
   loadingPbp: false,
   gameInfo: [],
   boxscore: [],
-  pbp: [],
+  pbp: []
 }
 
-const NCAAContext = createContext([{}, () => {}]);
+const NCAAContext = createContext([{}, () => {}])
 
 const NCAAProvider = (props) => {
-  const [ ncaa, setNCAA ] = useState(ncaaObj);
+  const [ncaa, setNCAA] = useState(ncaaObj)
   return (
     <NCAAContext.Provider value={[ncaa, setNCAA]}>
       {props.children}
     </NCAAContext.Provider>
-  );
+  )
 }
 
 NCAAProvider.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
-export { NCAAContext, NCAAProvider };
-
+export { NCAAContext, NCAAProvider }

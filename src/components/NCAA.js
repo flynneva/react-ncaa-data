@@ -72,27 +72,29 @@ function useNCAA() {
     var query =
       '/' +
       ncaa.proxy_api +
-      '/' + ncaa.base_query +
+      '/' +
+      ncaa.base_query +
       '/game' +
-      '/' + gameID +
+      '/' +
+      gameID +
       '/boxscore.json'
-    if(!ncaa.loadingBoxScore) {
-      setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: true}))
+    if (!ncaa.loadingBoxScore) {
+      setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: true }))
       fetch(query, {
-            method: 'GET',
-            headers: headers,
-            body: JSON.stringify()
+        method: 'GET',
+        headers: headers,
+        body: JSON.stringify()
       })
-      .then((response) => response.json())
-      .then((data) => {
-        setNCAA((ncaa) => ({ ...ncaa, boxscore: data}))
-        setNCAA((ncaa) => ({ ...ncaa, gameID: gameID}))
-        setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false}))
-      })
-      .catch((error) => {
-        setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false}))
-        console.log(error)
-      })
+        .then((response) => response.json())
+        .then((data) => {
+          setNCAA((ncaa) => ({ ...ncaa, boxscore: data }))
+          setNCAA((ncaa) => ({ ...ncaa, gameID: gameID }))
+          setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false }))
+        })
+        .catch((error) => {
+          setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false }))
+          console.log(error)
+        })
     }
   }
 
@@ -106,23 +108,23 @@ function useNCAA() {
       '/' +
       gameID +
       '/gameInfo.json'
-    if(!ncaa.loadingGameInfo) {
-      setNCAA((ncaa) => ({ ...ncaa, loadingGameInfo: true}))
+    if (!ncaa.loadingGameInfo) {
+      setNCAA((ncaa) => ({ ...ncaa, loadingGameInfo: true }))
       fetch(query, {
-              method: 'GET',
-              headers: headers,
-              body: JSON.stringify()
+        method: 'GET',
+        headers: headers,
+        body: JSON.stringify()
       })
-      .then((response) => response.json())
-      .then((data) => {
-        setNCAA((ncaa) => ({ ...ncaa, gameInfo: data}))
-        setNCAA((ncaa) => ({ ...ncaa, gameID: gameID}))
-        setNCAA((ncaa) => ({ ...ncaa, loadingGameInfo: false}))
-      })
-      .catch((error) => {
-        setNCAA((ncaa) => ({ ...ncaa, loadingGameInfo: false}))
-        console.log(error)
-      })
+        .then((response) => response.json())
+        .then((data) => {
+          setNCAA((ncaa) => ({ ...ncaa, gameInfo: data }))
+          setNCAA((ncaa) => ({ ...ncaa, gameID: gameID }))
+          setNCAA((ncaa) => ({ ...ncaa, loadingGameInfo: false }))
+        })
+        .catch((error) => {
+          setNCAA((ncaa) => ({ ...ncaa, loadingGameInfo: false }))
+          console.log(error)
+        })
     }
   }
 
@@ -136,31 +138,31 @@ function useNCAA() {
       '/' +
       gameID +
       '/pbp.json'
-    if(!ncaa.loadingPbp) {
-      setNCAA((ncaa) => ({ ...ncaa, loadingPbp: true}))
+    if (!ncaa.loadingPbp) {
+      setNCAA((ncaa) => ({ ...ncaa, loadingPbp: true }))
       fetch(query, {
-              method: 'GET',
-              headers: headers,
-              body: JSON.stringify()
+        method: 'GET',
+        headers: headers,
+        body: JSON.stringify()
       })
-      .then((response) => response.json())
-      .then((data) => {
-        setNCAA((ncaa) => ({ ...ncaa, pbp: data}))
-        setNCAA((ncaa) => ({ ...ncaa, gameID: gameID}))
-        setNCAA((ncaa) => ({ ...ncaa, loadingPbp: false}))
-      })
-      .catch((error) => {
-        setNCAA((ncaa) => ({ ...ncaa, loadingPbp: false}))
-        console.log(error)
-      })
+        .then((response) => response.json())
+        .then((data) => {
+          setNCAA((ncaa) => ({ ...ncaa, pbp: data }))
+          setNCAA((ncaa) => ({ ...ncaa, gameID: gameID }))
+          setNCAA((ncaa) => ({ ...ncaa, loadingPbp: false }))
+        })
+        .catch((error) => {
+          setNCAA((ncaa) => ({ ...ncaa, loadingPbp: false }))
+          console.log(error)
+        })
     }
   }
 
   function toggleGender() {
-    if ( ncaa.gender == 'men' ) {
-      setNCAA((ncaa) => ({ ...ncaa, gender: 'women'}))
-    } else if (ncaa.gender == 'women') {
-      setNCAA((ncaa) => ({ ...ncaa, gender: 'men'}))
+    if (ncaa.gender === 'men') {
+      setNCAA((ncaa) => ({ ...ncaa, gender: 'women' }))
+    } else if (ncaa.gender === 'women') {
+      setNCAA((ncaa) => ({ ...ncaa, gender: 'men' }))
     }
   }
 
@@ -187,20 +189,16 @@ function useNCAA() {
     timestamp: ncaa.timestamp,
     day: ncaa.day,
     month: ncaa.month,
-    year: ncaa.year,
+    year: ncaa.year
   }
 }
 
 function NCAA(props) {
-  return (
-    <NCAAProvider>
-      {props.children}
-    </NCAAProvider>
-  );
+  return <NCAAProvider>{props.children}</NCAAProvider>
 }
 
 NCAA.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 }
 
-export { useNCAA, NCAA };
+export { useNCAA, NCAA }
