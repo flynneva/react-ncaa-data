@@ -70,6 +70,8 @@ function useNCAA() {
     }
   }
 
+  var counter = 0
+  
   function getBoxScore(gameID) {
     var query =
       '/' +
@@ -80,8 +82,6 @@ function useNCAA() {
       '/' +
       gameID +
       '/boxscore.json'
-
-    var counter = 0
 
     if (!ncaa.loadingBoxScore) {
       setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: true }))
