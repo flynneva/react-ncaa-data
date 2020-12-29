@@ -2,13 +2,15 @@ import React, { useContext } from 'react'
 import { NCAAContext, NCAAProvider } from './NCAAContext'
 import PropTypes from 'prop-types'
 
-var headers = {
-  pragma: 'no-cache',
-  'cache-control': 'no-cache'
-}
-
 function useNCAA() {
   const [ncaa, setNCAA] = useContext(NCAAContext)
+
+  var headers = {
+    pragma: 'no-cache',
+    'cache-control': 'no-cache'
+  }
+
+  var counter = 0
 
   function changeProxyApi(newProxy) {
     setNCAA((ncaa) => ({ ...ncaa, proxy_api: newProxy }))
@@ -78,6 +80,9 @@ function useNCAA() {
       '/' +
       gameID +
       '/boxscore.json'
+
+    var counter = 0
+
     if (!ncaa.loadingBoxScore) {
       setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: true }))
       fetch(query, {
@@ -91,14 +96,21 @@ function useNCAA() {
             data.teams['0'].playerStats.length &&
             data.teams['0'].playerStats.length > 1
           ) {
+            counter = 0
             setNCAA((ncaa) => ({ ...ncaa, boxscore: data }))
             setNCAA((ncaa) => ({ ...ncaa, gameID: gameID }))
             setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false }))
           } else {
-            setTimeout(getBoxScore(gameID), 300)
+            counter = counter + 1
+            if (counter < 10) {
+              setTimeout(getBoxScore(gameID), 1000)
+            } else {
+              throw new Error('Tried 10 times to get boxscore...aborting')
+            }
           }
         })
         .catch((error) => {
+          counter = 0
           setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false }))
           console.log(error)
         })
