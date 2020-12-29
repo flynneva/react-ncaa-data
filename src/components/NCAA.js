@@ -87,9 +87,16 @@ function useNCAA() {
       })
         .then((response) => response.json())
         .then((data) => {
-          setNCAA((ncaa) => ({ ...ncaa, boxscore: data }))
-          setNCAA((ncaa) => ({ ...ncaa, gameID: gameID }))
-          setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false }))
+          if (
+            data.teams['0'].playerStats.length &&
+            data.teams['0'].playerStats.length > 1
+          ) {
+            setNCAA((ncaa) => ({ ...ncaa, boxscore: data }))
+            setNCAA((ncaa) => ({ ...ncaa, gameID: gameID }))
+            setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false }))
+          } else {
+            setTimeout(getBoxScore(gameID), 300)
+          }
         })
         .catch((error) => {
           setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false }))
