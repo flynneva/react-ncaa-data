@@ -70,8 +70,6 @@ function useNCAA() {
     }
   }
 
-  var counter = 0
-  
   function getBoxScore(gameID) {
     var query =
       '/' +
@@ -96,21 +94,14 @@ function useNCAA() {
             data.teams['0'].playerStats.length &&
             data.teams['0'].playerStats.length > 1
           ) {
-            counter = 0
             setNCAA((ncaa) => ({ ...ncaa, boxscore: data }))
             setNCAA((ncaa) => ({ ...ncaa, gameID: gameID }))
             setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false }))
           } else {
-            counter = counter + 1
-            if (counter < 10) {
-              setTimeout(getBoxScore(gameID), 1000)
-            } else {
-              throw new Error('Tried 10 times to get boxscore...aborting')
-            }
+            getBoxScore(gameID)
           }
         })
         .catch((error) => {
-          counter = 0
           setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false }))
           console.log(error)
         })
