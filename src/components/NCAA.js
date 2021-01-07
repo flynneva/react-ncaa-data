@@ -97,8 +97,6 @@ function useNCAA() {
             setNCAA((ncaa) => ({ ...ncaa, boxscore: data }))
             setNCAA((ncaa) => ({ ...ncaa, gameID: gameID }))
             setNCAA((ncaa) => ({ ...ncaa, loadingBoxScore: false }))
-          } else {
-            getBoxScore(gameID)
           }
         })
         .catch((error) => {
